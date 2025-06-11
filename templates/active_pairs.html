@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}CoinDCX Active Pairs{% endblock %}
+
+{% block content %}
+        <h1 class="text-3xl font-bold text-gray-800 mb-6">Active Pairs</h1>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="mb-4 p-4 rounded {% if category == 'error' %}bg-red-100 text-red-700{% else %}bg-green-100 text-green-700{% endif %}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <div class="bg-white shadow-md rounded-lg overflow-hidden">
+            <div class="p-4 bg-blue-50 border-b border-blue-100">
+                <p class="text-blue-800">Total Active Pairs: {{ pairs|length }}</p>
+            </div>
+            <table class="min-w-full">
+                <thead class="bg-gray-50">
+                    <tr>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Pair</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Base Currency</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Quote Currency</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Last Price</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">24h Volume</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200">
+                    {% for pair in pairs %}
+                    <tr class="hover:bg-gray-50">
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ pair.pair }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ pair.base_currency }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ pair.quote_currency }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ pair.last_price }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ pair.volume_24h }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% endblock %}
+    </div>
+</body>
+</html>

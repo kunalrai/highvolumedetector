@@ -1,0 +1,23 @@
+{% macro nav_item(route, text, bg_color='blue', is_active=false) %}
+<a href="{{ route }}" 
+   class="{% if is_active %}{{ bg_color }}-600{% else %}{{ bg_color }}-500{% endif %} hover:{{ bg_color }}-700 text-black font-bold py-2 px-4 rounded">
+    {{ text }}
+</a>
+{% endmacro %}
+
+<nav class="bg-white shadow mb-6">
+    <div class="container mx-auto px-4">
+        <div class="flex justify-between items-center py-4">
+            <div class="flex items-center">
+                <span class="text-xl font-bold text-gray-800">CoinDCX Tracker</span>
+            </div>            <div class="flex space-x-4">
+                {{ nav_item('/', 'Stored Pairs', 'blue', request.endpoint == 'index') }}
+                {{ nav_item('/active', 'Active Pairs', 'blue', request.endpoint == 'active_pairs') }}
+                {{ nav_item('/usdt', 'USDT Pairs', 'blue', request.endpoint == 'usdt_pairs') }}
+                {% if request.endpoint == 'index' %}
+                    {{ nav_item('/refresh', 'Refresh Data', 'green') }}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</nav>
